@@ -1,16 +1,19 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { HomeStack } from './HomeStack';
+import { GalleryStack } from './GalleryStack';
 import { CalendarStack } from './CalendarStack';
+import { SettingsStack } from './SettingsStack';
 import { useTheme } from '../constants/ThemeContext';
 import { RootStackParamList } from '../types';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
 export const AppNavigator: React.FC = () => {
-  const { colors, borderRadius } = useTheme();
+  const { colors } = useTheme();
 
   return (
     <NavigationContainer>
@@ -20,10 +23,17 @@ export const AppNavigator: React.FC = () => {
           tabBarStyle: {
             backgroundColor: colors.surface,
             borderTopColor: colors.border,
-            borderTopWidth: 1,
+            borderTopWidth: StyleSheet.hairlineWidth,
+            paddingTop: 8,
+            height: 88,
           },
           tabBarActiveTintColor: colors.primary,
-          tabBarInactiveTintColor: colors.textSecondary,
+          tabBarInactiveTintColor: colors.textTertiary,
+          tabBarLabelStyle: {
+            fontSize: 11,
+            fontWeight: '600',
+            marginTop: 4,
+          },
         }}
       >
         <Tab.Screen
@@ -31,7 +41,15 @@ export const AppNavigator: React.FC = () => {
           component={HomeStack}
           options={{
             tabBarLabel: 'Home',
-            tabBarIcon: ({ color, size }) => <Text style={{ fontSize: size, color }}>🏠</Text>,
+            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="home" size={size} color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="GalleryTab"
+          component={GalleryStack}
+          options={{
+            tabBarLabel: 'Discover',
+            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="compass-outline" size={size} color={color} />,
           }}
         />
         <Tab.Screen
@@ -39,7 +57,15 @@ export const AppNavigator: React.FC = () => {
           component={CalendarStack}
           options={{
             tabBarLabel: 'Calendar',
-            tabBarIcon: ({ color, size }) => <Text style={{ fontSize: size, color }}>📅</Text>,
+            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="calendar-month" size={size} color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="SettingsTab"
+          component={SettingsStack}
+          options={{
+            tabBarLabel: 'Settings',
+            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="cog-outline" size={size} color={color} />,
           }}
         />
       </Tab.Navigator>

@@ -1,39 +1,25 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import React from 'react';
+import { View } from 'react-native';
 import { useTheme } from '../constants/ThemeContext';
 
 type Props = {
-  progress: number; // 0 to 1
+  progress: number;
   color: string;
   height?: number;
 };
 
-export const ProgressBar: React.FC<Props> = ({ progress, color, height = 6 }) => {
-  const { colors, borderRadius } = useTheme();
-  const width = useSharedValue(0);
-
-  useEffect(() => {
-    width.value = withTiming(progress, { duration: 600 });
-  }, [progress]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    width: `${width.value * 100}%`,
-  }));
-
+export const ProgressBar: React.FC<Props> = ({ progress, color, height = 8 }) => {
+  const { colors } = useTheme();
   return (
-    <View style={[styles.track, { backgroundColor: colors.border, height, borderRadius: borderRadius.full }]}>
-      <Animated.View
-        style={[styles.fill, animatedStyle, { backgroundColor: color, height, borderRadius: borderRadius.full }]}
-      />
+    <View style={{
+      width: '100%', height, borderRadius: height / 2,
+      backgroundColor: colors.border, overflow: 'hidden',
+    }}>
+      <View style={{
+        width: `${Math.min(progress * 100, 100)}%`,
+        height, borderRadius: height / 2,
+        backgroundColor: color,
+      }} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  track: {
-    width: '100%',
-    overflow: 'hidden',
-  },
-  fill: {},
-});

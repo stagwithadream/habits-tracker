@@ -1,34 +1,35 @@
 export const colors = {
-  primary: '#6C63FF',
-  secondary: '#FF6584',
-  background: '#0F0F1A',
-  surface: '#1A1A2E',
-  card: '#16213E',
-  text: '#FFFFFF',
-  textSecondary: '#A0A0B2',
-  border: '#2A2A3E',
-  success: '#4CAF50',
-  warning: '#FF9800',
-  error: '#F44336',
-  // Habit colors
+  primary: '#7C6EF6',
+  secondary: '#FF6B8A',
+  background: '#0D0D12',
+  surface: '#161620',
+  card: '#1C1C28',
+  cardElevated: '#22222E',
+  text: '#F2F2F7',
+  textSecondary: '#8E8E93',
+  textTertiary: '#636366',
+  border: '#2C2C34',
+  success: '#30D158',
+  warning: '#FFD60A',
+  error: '#FF453A',
   habitColors: [
-    '#6C63FF', '#FF6584', '#43E97B', '#FA709A',
-    '#4FACFE', '#F093FB', '#FD7238', '#37ECB2',
+    '#7C6EF6', '#FF6B8A', '#30D158', '#FF9F0A',
+    '#64D2FF', '#BF5AF2', '#FF6723', '#32D74B',
   ],
 };
 
-export const darkColors = {
-  ...colors,
-};
+export const darkColors = { ...colors };
 
 export const lightColors = {
   ...colors,
-  background: '#F5F5FF',
+  background: '#F2F2F7',
   surface: '#FFFFFF',
   card: '#FFFFFF',
-  text: '#1A1A2E',
-  textSecondary: '#6B6B7B',
-  border: '#E0E0F0',
+  cardElevated: '#F8F8FC',
+  text: '#1C1C1E',
+  textSecondary: '#8E8E93',
+  textTertiary: '#AEAEB2',
+  border: '#E5E5EA',
 };
 
 export const spacing = {

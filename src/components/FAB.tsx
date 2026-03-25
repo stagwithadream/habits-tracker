@@ -1,55 +1,33 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import { TouchableOpacity } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '../constants/ThemeContext';
 
-type Props = {
-  onPress: () => void;
-  label?: string;
-};
-
-export const FAB: React.FC<Props> = ({ onPress, label = '+' }) => {
-  const { colors, spacing, borderRadius, typography } = useTheme();
-  const scale = useSharedValue(1);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
-
-  const handlePress = () => {
-    scale.value = withSpring(0.9, {}, () => { scale.value = withSpring(1); });
-    onPress();
-  };
-
+export const FAB: React.FC<{ onPress: () => void }> = ({ onPress }) => {
+  const { colors } = useTheme();
   return (
-    <Animated.View style={[styles.container, animatedStyle]}>
-      <TouchableOpacity
-        style={[styles.fab, { backgroundColor: colors.primary, borderRadius: borderRadius.full }]}
-        onPress={handlePress}
-        accessibilityLabel="Add new habit"
-      >
-        <Text style={[styles.label, { color: '#fff', ...typography.h2 }]}>{label}</Text>
-      </TouchableOpacity>
-    </Animated.View>
+    <TouchableOpacity
+      style={{
+        position: 'absolute',
+        bottom: 32,
+        right: 20,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: colors.primary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.4,
+        shadowRadius: 12,
+        elevation: 8,
+      }}
+      onPress={onPress}
+      accessibilityLabel="Add new habit"
+      activeOpacity={0.8}
+    >
+      <MaterialCommunityIcons name="plus" size={28} color="#fff" />
+    </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-  },
-  fab: {
-    width: 56,
-    height: 56,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-  },
-  label: {},
-});

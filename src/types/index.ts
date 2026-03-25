@@ -12,7 +12,9 @@ export type Habit = {
 
 export type RootStackParamList = {
   HomeTab: undefined;
+  GalleryTab: undefined;
   CalendarTab: undefined;
+  SettingsTab: undefined;
 };
 
 export type HomeStackParamList = {

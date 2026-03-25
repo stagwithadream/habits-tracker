@@ -4,11 +4,12 @@ import {
   StyleSheet, Alert, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '../constants/ThemeContext';
 import { useHabitStore } from '../store/habitStore';
 import { colors as themeColors } from '../constants/theme';
 
-const ICONS = ['💪', '📖', '💧', '🏃', '🌙', '🧘', '🥗', '✍️', '🎯', '🎸', '🧹', '💤'];
+const ICONS = ['arm-flex', 'book-open-page-variant', 'water', 'run', 'moon-waning-crescent', 'meditation', 'food-apple', 'pencil', 'target', 'guitar-acoustic', 'broom', 'sleep'];
 const TARGET_PRESETS = [7, 14, 21, 30, 60, 90];
 
 export const AddHabitScreen: React.FC = () => {
@@ -21,7 +22,7 @@ export const AddHabitScreen: React.FC = () => {
   const [targetDays, setTargetDays] = useState(21);
   const [customTarget, setCustomTarget] = useState('');
   const [selectedColor, setSelectedColor] = useState(themeColors.habitColors[0]);
-  const [selectedIcon, setSelectedIcon] = useState('💪');
+  const [selectedIcon, setSelectedIcon] = useState('arm-flex');
   const [titleError, setTitleError] = useState('');
 
   const handleSubmit = () => {
@@ -172,7 +173,7 @@ export const AddHabitScreen: React.FC = () => {
               onPress={() => setSelectedIcon(icon)}
               accessibilityLabel={`Icon ${icon}`}
             >
-              <Text style={styles.iconText}>{icon}</Text>
+              <MaterialCommunityIcons name={icon as any} size={22} color={selectedIcon === icon ? selectedColor : colors.textSecondary} />
             </TouchableOpacity>
           ))}
         </View>

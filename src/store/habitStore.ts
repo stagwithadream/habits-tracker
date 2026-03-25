@@ -57,7 +57,10 @@ export const useHabitStore = create<HabitStore>()(
       },
       initDefaults: () => {
         const { habits, addHabit } = get();
-        if (habits.length === 0) {
+        // Clear stale habits that have emoji icons (from old storage)
+        const hasEmojiIcons = habits.some((h) => /[\u{1F000}-\u{1FFFF}]/u.test(h.icon));
+        if (habits.length === 0 || hasEmojiIcons) {
+          set({ habits: [] });
           DEFAULT_HABITS.forEach((h) => addHabit(h));
         }
       },

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Calendar } from 'react-native-calendars';
 import { useTheme } from '../constants/ThemeContext';
 import { useHabitStore } from '../store/habitStore';
@@ -85,7 +86,7 @@ export const CalendarScreen: React.FC = () => {
               onPress={() => setFilterHabitId(filterHabitId === h.id ? null : h.id)}
               accessibilityLabel={`Filter by ${h.title}`}
             >
-              <Text style={[styles.chipText, { color: filterHabitId === h.id ? h.color : colors.textSecondary }]}>{h.icon} {h.title}</Text>
+              <Text style={[styles.chipText, { color: filterHabitId === h.id ? h.color : colors.textSecondary }]}><MaterialCommunityIcons name={h.icon as any} size={14} color={filterHabitId === h.id ? h.color : colors.textSecondary} /> {h.title}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -117,7 +118,7 @@ export const CalendarScreen: React.FC = () => {
               habitsOnDate.map((h) => (
                 <View key={h.id} style={styles.habitRow}>
                   <View style={[styles.dot, { backgroundColor: h.color }]} />
-                  <Text style={styles.habitName}>{h.icon} {h.title}</Text>
+                  <Text style={styles.habitName}><MaterialCommunityIcons name={h.icon as any} size={16} color={h.color} /> {h.title}</Text>
                 </View>
               ))
             )}

@@ -4,6 +4,7 @@ import {
   StyleSheet, Alert,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '../constants/ThemeContext';
 import { useHabits } from '../hooks/useHabits';
 import { ProgressBar } from '../components/ProgressBar';
@@ -57,7 +58,7 @@ export const HabitDetailScreen: React.FC = () => {
       borderTopColor: habit.color,
     },
     iconTitle: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm },
-    icon: { fontSize: 36, marginRight: spacing.sm },
+    iconWrap: { marginRight: spacing.sm },
     title: { ...typography.h2, color: colors.text, flex: 1 },
     description: { ...typography.body, color: colors.textSecondary, marginBottom: spacing.md },
     dateText: { ...typography.caption, color: colors.textSecondary },
@@ -104,7 +105,9 @@ export const HabitDetailScreen: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.heroCard}>
           <View style={styles.iconTitle}>
-            <Text style={styles.icon}>{habit.icon}</Text>
+            <View style={styles.iconWrap}>
+              <MaterialCommunityIcons name={habit.icon as any} size={36} color={habit.color} />
+            </View>
             <Text style={styles.title}>{habit.title}</Text>
           </View>
           {habit.description ? <Text style={styles.description}>{habit.description}</Text> : null}
@@ -116,13 +119,13 @@ export const HabitDetailScreen: React.FC = () => {
 
         <View style={styles.statsGrid}>
           {[
-            { value: `🔥 ${stats.currentStreak}`, label: 'Current Streak' },
-            { value: `⚡ ${stats.longestStreak}`, label: 'Longest Streak' },
-            { value: `✅ ${stats.totalCheckIns}`, label: 'Total Check-ins' },
-            { value: `${stats.completionPercentage}%`, label: 'Completion' },
+            { iconName: 'fire' as const, value: `${stats.currentStreak}`, label: 'Current Streak' },
+            { iconName: 'lightning-bolt' as const, value: `${stats.longestStreak}`, label: 'Longest Streak' },
+            { iconName: 'check-circle' as const, value: `${stats.totalCheckIns}`, label: 'Total Check-ins' },
+            { iconName: null, value: `${stats.completionPercentage}%`, label: 'Completion' },
           ].map((s, i) => (
             <View key={i} style={styles.statCard}>
-              <Text style={styles.statValue}>{s.value}</Text>
+              <Text style={styles.statValue}>{s.iconName ? <MaterialCommunityIcons name={s.iconName} size={20} color={habit.color} /> : null} {s.value}</Text>
               <Text style={styles.statLabel}>{s.label}</Text>
             </View>
           ))}

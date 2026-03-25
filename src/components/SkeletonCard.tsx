@@ -1,27 +1,32 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming } from 'react-native-reanimated';
+import React, { useEffect, useRef } from 'react';
+import { View, Animated } from 'react-native';
 import { useTheme } from '../constants/ThemeContext';
 
 export const SkeletonCard: React.FC = () => {
-  const { colors, spacing, borderRadius } = useTheme();
-  const opacity = useSharedValue(0.3);
+  const { colors } = useTheme();
+  const opacity = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
-    opacity.value = withRepeat(withTiming(0.8, { duration: 800 }), -1, true);
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, { toValue: 0.7, duration: 800, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 0.3, duration: 800, useNativeDriver: true }),
+      ])
+    ).start();
   }, []);
 
-  const animStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
-
   return (
-    <Animated.View style={[styles.card, animStyle, { backgroundColor: colors.card, borderRadius: borderRadius.lg, marginBottom: spacing.sm }]}>
-      <View style={[styles.line, { backgroundColor: colors.border, borderRadius: 4, width: '60%', height: 20, marginBottom: spacing.sm }]} />
-      <View style={[styles.line, { backgroundColor: colors.border, borderRadius: 4, width: '100%', height: 8 }]} />
+    <Animated.View style={{
+      opacity, backgroundColor: colors.card, borderRadius: 16, padding: 16, marginBottom: 12,
+      shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8,
+    }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 14 }}>
+        <View style={{ width: 40, height: 40, borderRadius: 12, backgroundColor: colors.border }} />
+        <View style={{ flex: 1, marginLeft: 12 }}>
+          <View style={{ width: '60%', height: 16, borderRadius: 4, backgroundColor: colors.border }} />
+        </View>
+      </View>
+      <View style={{ width: '100%', height: 8, borderRadius: 4, backgroundColor: colors.border }} />
     </Animated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  card: { padding: 16 },
-  line: {},
-});
